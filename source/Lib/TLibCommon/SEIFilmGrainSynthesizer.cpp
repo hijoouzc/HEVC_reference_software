@@ -620,7 +620,7 @@ void SEIFilmGrainSynthesizer::dataBaseGen()
 {
   uint32_t      pseudoRandValEhv;
   uint8_t       h, v; /* Horizaontal and vertical cut off frequencies (+2)*/
-  uint32_t      ScaleCutOffFh, ScaleCutOffFv, l, r, i, j, k;
+  uint32_t      ScaleCutOffFh, ScaleCutOffFv, l, i, j, k;
   int32_t       B[FG_DATA_BASE_SIZE][FG_DATA_BASE_SIZE], IDCT[FG_DATA_BASE_SIZE][FG_DATA_BASE_SIZE];
   int32_t       Grain[FG_DATA_BASE_SIZE][FG_DATA_BASE_SIZE];
 
@@ -652,7 +652,7 @@ void SEIFilmGrainSynthesizer::dataBaseGen()
       /* ehv : seed to be used for the psudo random generator for a given h and v */
       pseudoRandValEhv = seedLUT[h + v * 13];
 
-      for (l = 0, r = 0; l <= ScaleCutOffFv; l++)
+      for (l = 0; l <= ScaleCutOffFv; l++)
       {
         for (k = 0; k <= ScaleCutOffFh; k += 4)
         {
@@ -660,7 +660,6 @@ void SEIFilmGrainSynthesizer::dataBaseGen()
           B[k + 1][l] = gaussianLUT[(pseudoRandValEhv + 1) % 2048];
           B[k + 2][l] = gaussianLUT[(pseudoRandValEhv + 2) % 2048];
           B[k + 3][l] = gaussianLUT[(pseudoRandValEhv + 3) % 2048];
-          r++;
           pseudoRandValEhv = prng(pseudoRandValEhv);
         }
       }
